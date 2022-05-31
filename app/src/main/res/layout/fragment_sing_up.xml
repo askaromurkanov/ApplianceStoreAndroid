@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.singInUp.SingUpFragment"
+    android:background="#EDC12E">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="115dp"
+            android:layout_height="95dp"
+            android:src="@drawable/logo"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TECHNO"
+            android:textColor="#EBEAEA"
+            android:textSize="42dp"
+            android:textFontWeight="700"
+            android:fontFamily="@font/inter_regular"/>
+
+
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_marginTop="25dp"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:background="#EBEAEA"
+            android:layout_gravity="center_horizontal"
+            android:hint="   Электронная почта"
+            android:inputType="textEmailAddress"
+            android:textColorHint="#EDC12E"
+            android:textColor="@color/white"
+            />
+
+        <EditText
+            android:id="@+id/phonenumber"
+            android:layout_marginTop="25dp"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:background="#EBEAEA"
+            android:layout_gravity="center_horizontal"
+            android:textColorHint="#EDC12E"
+            android:inputType="number"
+            android:hint="   Номер телефона"
+            />
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_marginTop="25dp"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:background="#EBEAEA"
+            android:layout_gravity="center_horizontal"
+            android:textColorHint="#EDC12E"
+            android:inputType="textPassword"
+            android:hint="   Пароль"
+            />
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginTop="45dp"
+            android:layout_gravity="center_horizontal"
+            app:cornerRadius="10dp"
+            android:text="Зарегистриоваться"
+            android:fontFamily="@font/inter_regular"
+            android:textFontWeight="1000"
+            android:textSize="20dp"
+            android:backgroundTint="#E3912B"
+            />
+
+        <TextView
+            android:id="@+id/toRegisterPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Авторизация"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            android:layout_gravity="center_horizontal"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:gravity="center_horizontal"
+            android:text="Миллионы товаров\nвокруг"
+            android:textColor="@color/white"
+            android:textFontWeight="500"
+            android:textSize="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"/>
+
+
+
+    </LinearLayout>
+
+
+</FrameLayout>
