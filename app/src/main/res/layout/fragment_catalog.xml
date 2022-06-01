@@ -1,22 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.catalog.CatalogFragment">
+    tools:context=".ui.catalog.CatalogFragment"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+    <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:background="#EDC12E">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="66dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/logo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/logo"
+                android:layout_alignLeft="@+id/logo"
+                android:layout_alignRight="@+id/logo"
+                android:fontFamily="@font/inter_regular"
+                android:gravity="center_horizontal"
+                android:text="TECHNO"
+                android:textColor="#F4E7E7"
+                android:textFontWeight="700" />
+
+            <EditText
+                android:id="@+id/search"
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:background="@color/white"
+                android:drawableLeft="@drawable/ic_baseline_search_24"
+                android:paddingLeft="10dp"/>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/hits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#F9FBFF">
+
+        <TextView
+            android:id="@+id/discount_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/aleo_bold"
+            android:text="Все товары"
+            android:textColor="#202020"
+            android:textFontWeight="700"
+            android:textSize="25dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_all_products"
+            android:layout_below="@id/discount_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_product_horizontal"
+            android:paddingStart="3dp"
+            android:paddingEnd="3dp"
+            android:clipToPadding="false"
+            app:spanCount="2"
+            android:layout_marginBottom="50dp"/>
+
+    </RelativeLayout>
+</LinearLayout>

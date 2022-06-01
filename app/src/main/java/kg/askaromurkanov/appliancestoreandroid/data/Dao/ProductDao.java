@@ -33,6 +33,9 @@ public interface ProductDao {
     @Query("SELECT * FROM Product ORDER BY sales DESC LIMIT 4")
     List<Product> getHitProducts();
 
+    @Query("SELECT * FROM Product ORDER BY add_date DESC LIMIT 4")
+    List<Product> getNewProducts();
+
     @Query("SELECT * FROM Product WHERE discount > 0 ORDER BY discount DESC LIMIT 5")
     List<Product> getProductsWithDiscount();
 }

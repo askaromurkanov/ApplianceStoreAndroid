@@ -4,13 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.home.HomeFragment"
+    android:background="@color/white">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#EDC12E">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/logo"
+                    android:layout_width="66dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/logo"
+                    android:layout_alignLeft="@+id/logo"
+                    android:layout_alignRight="@+id/logo"
+                    android:fontFamily="@font/inter_regular"
+                    android:gravity="center_horizontal"
+                    android:text="TECHNO"
+                    android:textColor="#F4E7E7"
+                    android:textFontWeight="700" />
+
+                <EditText
+                    android:id="@+id/search"
+                    android:layout_width="280dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/white"
+                    android:drawableLeft="@drawable/ic_baseline_search_24"
+                    android:paddingLeft="10dp"/>
+
+            </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/hits"
@@ -22,13 +66,13 @@
                 android:id="@+id/discount_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/aleo_bold"
                 android:text="Скидки"
                 android:textColor="#202020"
                 android:textFontWeight="700"
-                android:textSize="25dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"/>
+                android:textSize="25dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_discount_products"
@@ -61,7 +105,6 @@
                 android:textColor="#202020"
                 android:textFontWeight="700"
                 android:textSize="25dp" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_hit_products"
                 android:layout_width="match_parent"
@@ -72,6 +115,38 @@
                 app:spanCount="2"
                 tools:listitem="@layout/item_product" />
         </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/newProd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#F9FBFF">
+
+            <TextView
+                android:id="@+id/newProducts_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/aleo_bold"
+                android:text="Новинки"
+                android:textColor="#202020"
+                android:textFontWeight="700"
+                android:textSize="25dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_new_products"
+                android:layout_below="@id/newProducts_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_product_horizontal"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:clipToPadding="false"
+                android:layout_marginBottom="50dp"/>
+        </RelativeLayout>
 
     </LinearLayout>
 

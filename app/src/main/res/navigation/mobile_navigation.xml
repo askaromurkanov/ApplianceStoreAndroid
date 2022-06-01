@@ -22,4 +22,10 @@
         android:name="kg.askaromurkanov.appliancestoreandroid.ui.basket.BasketFragment"
         android:label="@string/title_basket"
         tools:layout="@layout/fragment_basket" />
+
+    <fragment
+        android:id="@+id/navigation_orders"
+        android:name="kg.askaromurkanov.appliancestoreandroid.ui.orders.OrdersFragment"
+        android:label="@string/title_orders"
+        tools:layout="@layout/fragment_orders" />
 </navigation>

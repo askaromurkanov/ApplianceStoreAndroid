@@ -3,8 +3,10 @@ package kg.askaromurkanov.appliancestoreandroid.data.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity
-public class Product {
+public class Product implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;

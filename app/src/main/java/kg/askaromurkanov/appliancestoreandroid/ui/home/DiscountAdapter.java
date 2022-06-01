@@ -1,14 +1,19 @@
 package kg.askaromurkanov.appliancestoreandroid.ui.home;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
@@ -16,17 +21,20 @@ import androidx.room.Room;
 import java.util.ArrayList;
 import java.util.List;
 
+import kg.askaromurkanov.appliancestoreandroid.R;
 import kg.askaromurkanov.appliancestoreandroid.data.App;
 import kg.askaromurkanov.appliancestoreandroid.data.Dao.ProductDao;
 import kg.askaromurkanov.appliancestoreandroid.data.models.Product;
 import kg.askaromurkanov.appliancestoreandroid.data.room.AppDatabase;
 import kg.askaromurkanov.appliancestoreandroid.databinding.ItemProductBinding;
 import kg.askaromurkanov.appliancestoreandroid.databinding.ItemProductHorizontalBinding;
+import kg.askaromurkanov.appliancestoreandroid.ui.productCard.ProductCardFragment;
 
 
 public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.ViewHolder> {
     private List<Product> products = new ArrayList<>();
     private AppDatabase appDatabase;
+    private HomeFragment homeFragment;
     private ProductDao productDao;
 
     public void setList(List<Product> products){
@@ -40,8 +48,10 @@ public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.ViewHo
         ItemProductHorizontalBinding itemProductHorizontalBinding = ItemProductHorizontalBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
 
-        appDatabase = App.getAppDatabase(parent.getContext());
+        appDatabase = Room.databaseBuilder(parent.getContext().getApplicationContext(),
+                AppDatabase.class, "database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         productDao = appDatabase.productDao();
+
 
         ViewHolder viewHolder = new ViewHolder(itemProductHorizontalBinding);
         return viewHolder;
@@ -58,31 +68,29 @@ public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.ViewHo
         String price = "$"+String.valueOf(priceWithDiscount);
         holder.binding.productPrice.setText(price);
 
-
-
         String discount = "-"+product.getDiscount()+"%";
-        holder.binding.productDicount.setText(discount);
-        holder.binding.cardView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.binding.productDiscount.setText(discount);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                AlertDialog alertDialog = new AlertDialog.Builder(holder.binding.getRoot().getContext()).create();
-                alertDialog.setTitle("Вы хотите добавить "+product.getName() + " " + product.getFactory()+" в корзину");
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "принять",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+            public void onClick(View view) {
+                Fragment productCardFragment = new ProductCardFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("product", product);
+                productCardFragment.setArguments(bundle);
 
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "отклонить",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-                return true;
+                Bundle args = new Bundle();
+                args.putInt("productId", product.getId());
+
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Fragment myFragment = new ProductCardFragment();
+
+                myFragment.setArguments(args);
+
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.nav_host_fragment_activity_main, myFragment)
+                        .commit();
             }
         });
     }
@@ -101,5 +109,9 @@ public class DiscountAdapter extends RecyclerView.Adapter<DiscountAdapter.ViewHo
             this.binding = itemView;
         }
 
+    }
+    public void filterdList(ArrayList<Product> filteredList){
+        products = filteredList;
+        notifyDataSetChanged();
     }
 }

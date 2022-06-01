@@ -38,10 +38,10 @@
             android:layout_height="50dp"
             android:background="#EBEAEA"
             android:layout_gravity="center_horizontal"
-            android:hint="   Электронная почта"
+            android:hint="Электронная почта"
             android:inputType="textEmailAddress"
             android:textColorHint="#EDC12E"
-            android:textColor="@color/white"
+            android:padding="15dp"
             />
 
         <EditText
@@ -53,7 +53,8 @@
             android:layout_gravity="center_horizontal"
             android:textColorHint="#EDC12E"
             android:inputType="number"
-            android:hint="   Номер телефона"
+            android:hint="Номер телефона"
+            android:padding="15dp"
             />
 
         <EditText
@@ -65,11 +66,12 @@
             android:layout_gravity="center_horizontal"
             android:textColorHint="#EDC12E"
             android:inputType="textPassword"
-            android:hint="   Пароль"
+            android:hint="Пароль"
+            android:padding="15dp"
             />
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/singUpBtn"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginTop="45dp"
@@ -83,7 +85,7 @@
             />
 
         <TextView
-            android:id="@+id/toRegisterPage"
+            android:id="@+id/singIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Авторизация"

@@ -1,6 +1,9 @@
 package kg.askaromurkanov.appliancestoreandroid.ui.home;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +11,22 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import kg.askaromurkanov.appliancestoreandroid.R;
 import kg.askaromurkanov.appliancestoreandroid.data.App;
+import kg.askaromurkanov.appliancestoreandroid.data.Dao.OrderDao;
 import kg.askaromurkanov.appliancestoreandroid.data.Dao.ProductDao;
+import kg.askaromurkanov.appliancestoreandroid.data.models.Order;
 import kg.askaromurkanov.appliancestoreandroid.data.models.Product;
 import kg.askaromurkanov.appliancestoreandroid.data.room.AppDatabase;
 import kg.askaromurkanov.appliancestoreandroid.databinding.FragmentHomeBinding;
@@ -26,9 +35,11 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerViewDiscount;
     private RecyclerView recyclerViewHit;
+    private RecyclerView recyclerViewNew;
 
     private DiscountAdapter discountAdapter;
     private HitAdapter hitAdapter;
+    private NewAdapter newAdapter;
 
 
 
@@ -37,8 +48,12 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
 
+    public HomeFragment() {
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
@@ -47,17 +62,62 @@ public class HomeFragment extends Fragment {
 
         init();
 
+        binding.search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
+
         return root;
+
+    }
+
+    private void filter(String text){
+        ArrayList<Product> filteredList = new ArrayList<>();
+        for (Product product : productDao.getAll()){
+            if(product.getName().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(product);
+            }
+            else if(product.getModel().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(product);
+            }
+            else if(product.getFactory().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(product);
+            }
+            else if(product.getFactory().toLowerCase().contains(text.toLowerCase())){
+                filteredList.add(product);
+            }
+        }
+
+        discountAdapter.filterdList(filteredList);
+        hitAdapter.filterdList(filteredList);
+        newAdapter.filterdList(filteredList);
     }
 
     void init(){
-//        insertProducts();
-        appDatabase = App.getAppDatabase(getContext());
+
+       insertProducts();
+        appDatabase = Room.databaseBuilder(getContext().getApplicationContext(),
+                AppDatabase.class, "database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
 
         productDao = appDatabase.productDao();
+//        productDao.cleanTable();
+
 
         recyclerViewDiscount = binding.recyclerDiscountProducts;
         recyclerViewHit = binding.recyclerHitProducts;
+        recyclerViewNew = binding.recyclerNewProducts;
 
         discountAdapter = new DiscountAdapter();
         discountAdapter.setList(productDao.getProductsWithDiscount());
@@ -65,9 +125,13 @@ public class HomeFragment extends Fragment {
         hitAdapter = new HitAdapter();
         hitAdapter.setList(productDao.getHitProducts());
 
+        newAdapter = new NewAdapter();
+        newAdapter.setList(productDao.getNewProducts());
+
 
         recyclerViewDiscount.setAdapter(discountAdapter);
         recyclerViewHit.setAdapter(hitAdapter);
+        recyclerViewNew.setAdapter(newAdapter);
 
     }
 
@@ -112,11 +176,18 @@ public class HomeFragment extends Fragment {
                         " пространства лучшим образом подойдет для использования на любой кухне. Отличную негромкую работу ему" +
                         " обеспечивает надежный компрессор.", 4.9, add_date, 5);
 
+        Product product6 = new Product("Посудомоечная машина", "ZWM536WH","HANSA", "Кухонная техника", 247,
+                0, 5, R.drawable.machine,
+                "Модель предназначена для загрузки 6 комплектов посуды и расходует 6.5 л воды. Благодаря размерам машинки 43.8x55x50" +
+                        " см вы сможете установить ее в качестве встраиваемой техники, что гарантирует экономию пространства. " +
+                        "Устройство с поддержкой таймера отсрочки сигнала использует конденсационную бережную сушку.", 4.8, add_date, 2);
+
         productDao.insert(product1);
         productDao.insert(product2);
         productDao.insert(product3);
         productDao.insert(product4);
         productDao.insert(product5);
+        productDao.insert(product6);
     }
 
     @Override

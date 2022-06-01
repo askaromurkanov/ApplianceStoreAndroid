@@ -1,11 +1,14 @@
-package kg.askaromurkanov.appliancestoreandroid.ui.home;
+package kg.askaromurkanov.appliancestoreandroid.ui.catalog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,14 +27,14 @@ import kg.askaromurkanov.appliancestoreandroid.data.Dao.ProductDao;
 import kg.askaromurkanov.appliancestoreandroid.data.models.Product;
 import kg.askaromurkanov.appliancestoreandroid.data.room.AppDatabase;
 import kg.askaromurkanov.appliancestoreandroid.databinding.ItemProductBinding;
+import kg.askaromurkanov.appliancestoreandroid.databinding.ItemProductHorizontalBinding;
 import kg.askaromurkanov.appliancestoreandroid.ui.productCard.ProductCardFragment;
 
 
-public class HitAdapter extends RecyclerView.Adapter<HitAdapter.ViewHolder> {
+public class CatalogAdapter extends RecyclerView.Adapter<CatalogAdapter.ViewHolder> {
     private List<Product> products = new ArrayList<>();
-    private ProductDao productDao;
-    private HomeFragment homeFragment;
     private AppDatabase appDatabase;
+    private ProductDao productDao;
 
     public void setList(List<Product> products){
         this.products = products;
@@ -40,16 +43,16 @@ public class HitAdapter extends RecyclerView.Adapter<HitAdapter.ViewHolder> {
 
     @NonNull
     @Override
-    public HitAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemProductBinding itemProductBinding = ItemProductBinding
+    public CatalogAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        ItemProductHorizontalBinding itemProductHorizontalBinding = ItemProductHorizontalBinding
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false);
-
-        ViewHolder viewHolder = new ViewHolder(itemProductBinding);
 
         appDatabase = Room.databaseBuilder(parent.getContext().getApplicationContext(),
                 AppDatabase.class, "database").allowMainThreadQueries().fallbackToDestructiveMigration().build();
         productDao = appDatabase.productDao();
 
+
+        ViewHolder viewHolder = new ViewHolder(itemProductHorizontalBinding);
         return viewHolder;
     }
 
@@ -59,18 +62,28 @@ public class HitAdapter extends RecyclerView.Adapter<HitAdapter.ViewHolder> {
         String fullName = product.getName()+" "+product.getFactory()+" "+product.getModel();
         holder.binding.productName.setText(fullName);
         holder.binding.productImage.setImageResource(product.getImage());
+
         double priceWithDiscount = product.getPrice()-(product.getPrice()*product.getDiscount())/100;
-        String price = "$"+priceWithDiscount;
+        String price = "$"+String.valueOf(priceWithDiscount);
         holder.binding.productPrice.setText(price);
+
+        if(product.getDiscount()>0) {
+            String discount = "-" + product.getDiscount() + "%";
+            holder.binding.productDiscount.setText(discount);
+        }
+        else {
+            holder.binding.productDiscount.setVisibility(View.INVISIBLE);
+        }
+
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Fragment productCardFragment = new ProductCardFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable("product", product);
-//                productCardFragment.setArguments(bundle);
+                Fragment productCardFragment = new ProductCardFragment();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("product", product);
+                productCardFragment.setArguments(bundle);
 
                 Bundle args = new Bundle();
                 args.putInt("productId", product.getId());
@@ -86,8 +99,6 @@ public class HitAdapter extends RecyclerView.Adapter<HitAdapter.ViewHolder> {
                         .commit();
             }
         });
-
-
     }
 
     @Override
@@ -96,11 +107,10 @@ public class HitAdapter extends RecyclerView.Adapter<HitAdapter.ViewHolder> {
     }
 
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ItemProductBinding binding;
+        private ItemProductHorizontalBinding binding;
 
-        public ViewHolder(@NonNull ItemProductBinding itemView) {
+        public ViewHolder(@NonNull ItemProductHorizontalBinding itemView) {
             super(itemView.getRoot());
             this.binding = itemView;
         }

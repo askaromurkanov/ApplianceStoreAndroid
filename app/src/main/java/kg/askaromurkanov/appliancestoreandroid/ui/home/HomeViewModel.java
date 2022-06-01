@@ -24,8 +24,5 @@ public class HomeViewModel extends ViewModel {
         products = new MutableLiveData<>();
     }
 
-//    public LiveData<String> getText() {
-//        return mText;
-//    }
 
 }

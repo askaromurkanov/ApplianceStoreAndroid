@@ -1,31 +1,30 @@
-package kg.askaromurkanov.appliancestoreandroid.ui.basket;
+package kg.askaromurkanov.appliancestoreandroid.ui.orders;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.room.Room;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import kg.askaromurkanov.appliancestoreandroid.data.Dao.BasketDao;
+import kg.askaromurkanov.appliancestoreandroid.data.Dao.OrderDao;
 import kg.askaromurkanov.appliancestoreandroid.data.Dao.ProductDao;
 import kg.askaromurkanov.appliancestoreandroid.data.UserService.UserService;
-import kg.askaromurkanov.appliancestoreandroid.data.models.Basket;
+import kg.askaromurkanov.appliancestoreandroid.data.models.Order;
 import kg.askaromurkanov.appliancestoreandroid.data.models.Product;
 import kg.askaromurkanov.appliancestoreandroid.data.room.AppDatabase;
 
-public class BasketViewModel extends ViewModel {
+public class OrdersViewModel extends ViewModel {
 
 
-    private MutableLiveData<ArrayList<Basket>> baskets;
+    private MutableLiveData<ArrayList<Order>> orders;
     private MutableLiveData<ArrayList<Product>> products;
+    private ArrayList<Order> OrderArrayList;
     private AppDatabase appDatabase;
-    private BasketDao basketDao;
+    private OrderDao orderDao;
     private ProductDao productDao;
 
-    public BasketViewModel() {
-        baskets = new MutableLiveData<>();
+    public OrdersViewModel() {
+        orders = new MutableLiveData<>();
         products = new MutableLiveData<>();
     }
 
@@ -36,17 +35,17 @@ public class BasketViewModel extends ViewModel {
     }
 
     private void init(){
-        basketDao = appDatabase.basketDao();
+        orderDao = appDatabase.orderDao();
         productDao = appDatabase.productDao();
     }
 
-    public LiveData<ArrayList<Product>> getProductsInBasket(){
+    public LiveData<ArrayList<Product>> getOrderedProducts(){
         init();
         ArrayList<Product> products1 = new ArrayList<>();
-        List<Basket> baskets = basketDao.getBasket(UserService.getId());
+        List<Order> orders = orderDao.getByUser(UserService.getId());
 
-        for (Basket basket : baskets){
-            products1.add(productDao.getById(basket.getProductId()));
+        for (Order order : orders){
+            products1.add(productDao.getById(order.getProductId()));
         }
 
         products.setValue(products1);

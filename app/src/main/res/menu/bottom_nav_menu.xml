@@ -5,15 +5,17 @@
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home_black_24dp"
         android:title="@string/title_home" />
-
     <item
         android:id="@+id/navigation_dashboard"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/title_catalog" />
-
     <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_baseline_shopping_basket_24"
         android:title="@string/title_basket" />
+    <item
+        android:id="@+id/navigation_orders"
+        android:icon="@drawable/ic_baseline_laptop_mac_24"
+        android:title="@string/title_orders" />
 
 </menu>

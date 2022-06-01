@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/card_view"
+        card_view:cardElevation="4dp"
+        card_view:cardCornerRadius="3dp"
+        card_view:cardUseCompatPadding="true"
+        android:backgroundTint="@color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/product_image"
+                    android:layout_width="70dp"
+                    android:layout_height="71dp"
+                    android:src="@drawable/vacuum_cleaner" />
+
+                <TextView
+                    android:id="@+id/product_name"
+                    android:layout_width="260dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toRightOf="@+id/product_image"
+                    android:breakStrategy="simple"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/inter_regular"
+                    android:maxLines="2"
+                    android:text="Циклонный пылесос Philips FC-9332/09"
+                    android:textColor="#232222"
+                    android:textFontWeight="700"
+                    android:textSize="16dp"/>
+
+
+                <TextView
+                    android:id="@+id/product_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/product_name"
+                    android:layout_marginLeft="5dp"
+
+                    android:layout_toRightOf="@id/product_image"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="7650с"
+                    android:textColor="#D53030"
+                    android:textFontWeight="700"
+                    android:textSize="18dp" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/discount_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#57AC1B"
+                    app:cardCornerRadius="6dp"
+                    android:layout_toRightOf="@+id/product_price"
+
+                    android:layout_below="@id/product_name"
+                    android:layout_marginLeft="8dp">
+
+                    <TextView
+                        android:id="@+id/product_discount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_regular"
+                        android:gravity="center_horizontal"
+                        android:text="-10%"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:textColor="@color/white"
+                        android:textFontWeight="1000"
+                        android:textSize="16dp"
+                        />
+                </androidx.cardview.widget.CardView>
+
+
+                <ImageView
+                    android:id="@+id/delete_icon"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_baseline_delete_24"
+                    android:layout_alignParentRight="true"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

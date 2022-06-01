@@ -33,28 +33,28 @@
                     android:id="@+id/product_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_regular"
                     android:layout_below="@id/product_image"
-                    android:text="Циклонный пылесос Philips FC-9332/09"
-                    android:textFontWeight="600"
+                    android:fontFamily="@font/inter_regular"
                     android:gravity="center"
                     android:maxLength="30"
                     android:maxLines="2"
-                    android:textSize="15dp"
-                    android:textColor="#1C1C1C"/>
+                    android:text="Циклонный пылесос Philips FC-9332/09"
+                    android:textColor="#1C1C1C"
+                    android:textFontWeight="600"
+                    android:textSize="15dp" />
 
                 <TextView
-                    android:id="@+id/product_dicount"
+                    android:id="@+id/product_discount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/product_name"
                     android:fontFamily="@font/aleo_bold"
                     android:gravity="center_horizontal"
+                    android:rotation="-5"
                     android:text="-10%"
                     android:textColor="#FFC415"
                     android:textFontWeight="1000"
-                    android:textSize="35dp"
-                    android:rotation="-5"/>
+                    android:textSize="35dp" />
 
 
                 <TextView
